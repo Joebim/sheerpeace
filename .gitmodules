@@ -1,0 +1,6 @@
+[submodule "sheerpeace-frontend"]
+	path = sheerpeace-frontend
+	url = https://github.com/Joebim/sheerpeace-frontend.git
+[submodule "sheerpeace-backend"]
+	path = sheerpeace-backend
+	url = https://github.com/Joebim/sheerpeace-backend.git
