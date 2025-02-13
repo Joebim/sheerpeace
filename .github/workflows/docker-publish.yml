@@ -1,0 +1,31 @@
+name: Publish Docker Images
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  REGISTRY: ghcr.io
+  BACKEND_IMAGE_NAME: ${{ github.actor }}/sheerpeace-backend:latest
+  FRONTEND_IMAGE_NAME: ${{ github.actor }}/sheerpeace-frontend:latest
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        run: |
+          echo "${{ secrets.PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Build and Push Backend
+        run: |
+          docker build -t ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }} ./sheerpeace-backend
+          docker push ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
+
+      - name: Build and Push Frontend
+        run: |
+          docker build -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }} ./sheerpeace-frontend
+          docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
