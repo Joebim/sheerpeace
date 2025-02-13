@@ -15,10 +15,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: true  # ✅ Clones submodules (frontend & backend)
+          submodules: recursive  # ✅ Clones submodules correctly
+          fetch-depth: 0
 
       - name: Convert GitHub Actor to Lowercase
         run: echo "USERNAME_LOWER=$(echo '${{ github.actor }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Debug directory structure
+        run: ls -R  # 🔍 Check if glimere-backend exists
+
+      - name: Debug working directory
+        run: pwd  # 🔍 See where we are
 
       - name: Login to GitHub Container Registry
         run: |
