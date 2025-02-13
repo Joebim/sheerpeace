@@ -33,10 +33,10 @@ jobs:
 
       - name: Build and Push Backend
         run: |
-          docker build ./sheerpeace-backend --tag ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-backend:latest
-          docker push ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-backend:latest
+          docker build ./sheerpeace-backend --tag joebim/sheerpeace-backend:latest
+          docker push joebim/sheerpeace-backend:latest
 
       - name: Build and Push Frontend
         run: |
-          docker build ./sheerpeace-frontend --tag ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-frontend:latest
-          docker push ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-frontend:latest
+          docker build ./sheerpeace-frontend --tag joebim/sheerpeace-frontend:latest
+          docker push joebim/sheerpeace-frontend:latest
