@@ -1,4 +1,4 @@
-name: Publish Docker Images
+name: publish
 
 on:
   push:
@@ -6,15 +6,19 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BACKEND_IMAGE_NAME: ${{ github.actor }}/sheerpeace-backend:latest
-  FRONTEND_IMAGE_NAME: ${{ github.actor }}/sheerpeace-frontend:latest
 
 jobs:
   publish:
+    name: publish images
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          submodules: true  # ✅ Clones submodules (frontend & backend)
+
+      - name: Convert GitHub Actor to Lowercase
+        run: echo "USERNAME_LOWER=$(echo '${{ github.actor }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Login to GitHub Container Registry
         run: |
@@ -22,10 +26,10 @@ jobs:
 
       - name: Build and Push Backend
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }} ./sheerpeace-backend
-          docker push ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
+          docker build ./glimere-backend --tag ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-backend:latest
+          docker push ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-backend:latest
 
       - name: Build and Push Frontend
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }} ./sheerpeace-frontend
-          docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+          docker build ./glimere-frontend --tag ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-frontend:latest
+          docker push ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-frontend:latest
