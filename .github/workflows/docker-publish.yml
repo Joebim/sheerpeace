@@ -32,13 +32,11 @@ jobs:
           echo "${{ secrets.PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
       - name: Build and Push Backend
-        working-directory: ./sheerpeace  # Set the working directory
         run: |
-          docker build ./glimere-backend --tag ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-backend:latest
+          docker build ./sheerpeace/glimere-backend --tag ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-backend:latest
           docker push ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-backend:latest
 
       - name: Build and Push Frontend
-        working-directory: ./sheerpeace  # Set the working directory
         run: |
-          docker build ./glimere-frontend --tag ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-frontend:latest
+          docker build ./sheerpeace/glimere-frontend --tag ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-frontend:latest
           docker push ${{ env.REGISTRY }}/$USERNAME_LOWER/sheerpeace-frontend:latest
