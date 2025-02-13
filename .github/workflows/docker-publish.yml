@@ -31,13 +31,13 @@ jobs:
       - name: Build and Push Backend
         run: |
           IMAGE_NAME_LOWER_BACKEND=$(echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]')/sheerpeace-backend:latest
-          docker build . --tag ${{ env.REGISTRY }}/$IMAGE_NAME_LOWER_BACKEND
+          docker build ./sheerpeace-backend --tag ${{ env.REGISTRY }}/$IMAGE_NAME_LOWER_BACKEND
           docker push ${{ env.REGISTRY }}/$IMAGE_NAME_LOWER_BACKEND
 
       - name: Build and Push Frontend
         run: |
           IMAGE_NAME_LOWER_FRONTEND=$(echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]')/sheerpeace-frontend:latest
-          docker build . --tag ${{ env.REGISTRY }}/$IMAGE_NAME_LOWER_FRONTEND
+          docker build ./sheerpeace-frontend --tag ${{ env.REGISTRY }}/$IMAGE_NAME_LOWER_FRONTEND
           docker push ${{ env.REGISTRY }}/$IMAGE_NAME_LOWER_FRONTEND
 
        
